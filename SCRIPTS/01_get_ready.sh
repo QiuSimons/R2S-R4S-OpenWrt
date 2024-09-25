@@ -90,7 +90,7 @@ clone_repo $sbwfw876_repo v5 sbwfw876 &
 clone_repo $sbw_pkg_repo main sbw_pkg &
 clone_repo $natmap_repo master natmap &
 clone_repo $v2ray_geodata_repo master v2ray-geodata &
-clone_repo $mihomo_repo main OpenWrt-mihomo &
+# clone_repo $mihomo_repo main OpenWrt-mihomo &
 # clone_repo $kucat_repo js luci-theme-kucat &
 # clone_repo $advancedplus_repo main luci-app-advancedplus&
 clone_repo $xwrt_repo master xwrt &
