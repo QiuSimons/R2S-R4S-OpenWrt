@@ -130,15 +130,6 @@ rm -rf ./feeds/packages/lang/golang
 cp -rf ../openwrt_pkg_ma/lang/golang ./feeds/packages/lang/golang
 # 访问控制
 cp -rf ../OpenWrt-Add/luci-app-control-weburl ./package/new/luci-app-control-weburl
-# 广告过滤 AdGuard
-cp -rf ../sirpdboy/luci-app-adguardhome ./package/new/luci-app-adguardhome
-cp -rf ../sirpdboy/adguardhome ./package/new/adguardhome
-rm -rf ./feeds/packages/net/adguardhome
-
-# Argon 主题
-git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git package/new/luci-theme-argon
-rm -rf ./package/new/luci-theme-argon/htdocs/luci-static/argon/background/README*
-git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git package/new/luci-app-argon-config
 # MAC 地址与 IP 绑定
 cp -rf ../immortalwrt_luci/applications/luci-app-arpbind ./feeds/luci/applications/luci-app-arpbind
 ln -sf ../../../feeds/luci/applications/luci-app-arpbind ./package/feeds/luci/luci-app-arpbind
@@ -191,7 +182,6 @@ sed -i '/defaults/{N;d;}' feeds/packages/net/frp/Makefile
 cp -rf ../lede_luci/applications/luci-app-frps ./package/new/luci-app-frps
 cp -rf ../lede_luci/applications/luci-app-frpc ./package/new/luci-app-frpc
 # IPv6 兼容助手
-cp -rf ../lede/package/lean/ipv6-helper ./package/new/ipv6-helper
 patch -p1 <../PATCH/odhcp6c/1002-odhcp6c-support-dhcpv6-hotplug.patch
 # ODHCPD
 mkdir -p package/network/services/odhcpd/patches
@@ -274,7 +264,10 @@ rm -rf ./feeds/packages/net/sing-box
 cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
 # Mihomo
 git clone -b main --depth 1 https://github.com/morytyann/OpenWrt-mihomo package/new/OpenWrt-mihomo
-
+# 广告过滤 AdGuard
+cp -rf ../sirpdboy/luci-app-adguardhome ./package/new/luci-app-adguardhome
+cp -rf ../sirpdboy/adguardhome ./package/new/adguardhome
+rm -rf ./feeds/packages/net/adguardhome
 # Patch LuCI 以增添 NAT6 开关
 pushd feeds/luci
 patch -p1 <../../../PATCH/firewall/03-luci-app-firewall_add_ipv6-nat.patch
