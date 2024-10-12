@@ -53,47 +53,22 @@ xwrt_repo="https://github.com/QiuSimons/openwrt-natflow"
 # 开始克隆仓库，并行执行
 clone_repo $openwrt_repo $latest_release openwrt &
 clone_repo $openwrt_repo openwrt-23.05 openwrt_snap &
-clone_repo $immortalwrt_repo master immortalwrt &
-clone_repo $immortalwrt_repo openwrt-21.02 immortalwrt_21 &
 clone_repo $immortalwrt_repo openwrt-23.05 immortalwrt_23 &
 clone_repo $immortalwrt_pkg_repo master immortalwrt_pkg &
-clone_repo $immortalwrt_pkg_repo openwrt-21.02 immortalwrt_pkg_21 &
 clone_repo $immortalwrt_luci_repo master immortalwrt_luci &
-clone_repo $immortalwrt_luci_repo openwrt-21.02 immortalwrt_luci_21 &
-clone_repo $immortalwrt_luci_repo openwrt-23.05 immortalwrt_luci_23 &
 clone_repo $lede_repo master lede &
 clone_repo $lede_luci_repo master lede_luci &
 clone_repo $lede_pkg_repo master lede_pkg &
 clone_repo $openwrt_repo main openwrt_ma &
-clone_repo $openwrt_repo openwrt-22.03 openwrt_22 &
 clone_repo $openwrt_pkg_repo master openwrt_pkg_ma &
 clone_repo $openwrt_luci_repo master openwrt_luci_ma &
-clone_repo $lienol_repo 23.05 Lienol &
-clone_repo $lienol_pkg_repo main Lienol_pkg &
 clone_repo $openwrt_add_repo master OpenWrt-Add &
-clone_repo $openwrt_node_repo master openwrt-node &
-clone_repo $passwall_pkg_repo main passwall_pkg &
-clone_repo $passwall_luci_repo main passwall_luci &
-clone_repo $openwrt_third_repo main openwrt-third &
-#clone_repo $dockerman_repo master dockerman &
-clone_repo $diskman_repo master diskman &
-# clone_repo $docker_lib_repo master docker_lib &
-clone_repo $mosdns_repo v5 luci-app-mosdns &
-clone_repo $ssrp_repo main ssrp &
-clone_repo $zxlhhyccc_repo master zxlhhyccc &
+clone_repo $dockerman_repo master dockerman &
+clone_repo $docker_lib_repo master docker_lib &
 clone_repo $linkease_repo main linkease &
-clone_repo $linkease_pkg_repo istoreos-21.02 linkease_pkg &
-clone_repo $linkease_luci_repo istoreos-21.02 linkease_luci &
 clone_repo $sirpdboy_repo main sirpdboy &
-clone_repo $lucidaednext_repo rebase lucidaednext &
-clone_repo $sbwfw876_repo v5 sbwfw876 &
-clone_repo $sbw_pkg_repo main sbw_pkg &
-clone_repo $natmap_repo master natmap &
-clone_repo $v2ray_geodata_repo master v2ray-geodata &
 clone_repo $mihomo_repo main OpenWrt-mihomo &
-# clone_repo $kucat_repo js luci-theme-kucat &
-# clone_repo $advancedplus_repo main luci-app-advancedplus&
-clone_repo $xwrt_repo master xwrt &
+clone_repo $mosdns_repo v5 luci-app-mosdns &
 
 # 等待所有后台任务完成
 wait
