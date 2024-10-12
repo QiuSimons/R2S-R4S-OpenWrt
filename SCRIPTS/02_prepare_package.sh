@@ -264,25 +264,23 @@ patch -p1 < ../PATCH/firewall/luci-app-firewall_add_sfe_switch.patch
 # Mosdns
 git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/new/luci-app-mosdns
 rm -rf ./feeds/packages/net/v2ray-geodata
-cp -rf ../luci-app-mosdns/v2dat ./package/new/v2dat
-cp -rf ../v2ray-geodata ./package/new/v2ray-geodata
+cp -rf ../mosdns/v2ray-geodata ./package/new/v2ray-geodata
 # Lucky
 cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./package/new/luci-app-lucky
 cp -rf ../sirpdboy/luci-app-lucky/lucky ./package/new/lucky
+# homeproxy
+git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git package/new/homeproxy
+rm -rf ./feeds/packages/net/sing-box
+cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
+# Mihomo
+git clone -b main --depth 1 https://github.com/morytyann/OpenWrt-mihomo package/new/OpenWrt-mihomo
+
 # Patch LuCI 以增添 NAT6 开关
 pushd feeds/luci
 patch -p1 <../../../PATCH/firewall/03-luci-app-firewall_add_ipv6-nat.patch
 # Patch LuCI 以支持自定义 nft 规则
 patch -p1 <../../../PATCH/firewall/04-luci-add-firewall4-nft-rules-file.patch
 popd
-# homeproxy
-git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git package/new/homeproxy
-rm -rf ./feeds/packages/net/sing-box
-cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
-
-# Mihomo
-cp -rf ../OpenWrt-mihomo/luci-app-mihomo ./package/new/luci-app-mihomo
-cp -rf ../OpenWrt-mihomo/mihomo ./package/new/mihomo
 
 #LTO/GC
 # Grub 2
