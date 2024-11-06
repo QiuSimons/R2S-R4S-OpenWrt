@@ -33,22 +33,21 @@ openwrt_third_repo="https://github.com/jjm2473/openwrt-third"
 dockerman_repo="https://github.com/lisaac/luci-app-dockerman"
 diskman_repo="https://github.com/lisaac/luci-app-diskman"
 docker_lib_repo="https://github.com/lisaac/luci-lib-docker"
-mosdns_repo="https://github.com/sbwml/luci-app-mosdns.git"
+mosdns_repo="https://github.com/QiuSimons/openwrt-mos"
 ssrp_repo="https://github.com/fw876/helloworld"
 zxlhhyccc_repo="https://github.com/zxlhhyccc/bf-package-master"
 linkease_repo="https://github.com/linkease/openwrt-app-actions"
 linkease_pkg_repo="https://github.com/jjm2473/packages"
 linkease_luci_repo="https://github.com/jjm2473/luci"
 sirpdboy_repo="https://github.com/sirpdboy/sirpdboy-package"
+sbwdaednext_repo="https://github.com/sbwml/luci-app-daed-next"
 lucidaednext_repo="https://github.com/QiuSimons/luci-app-daed-next"
 sbwfw876_repo="https://github.com/sbwml/openwrt_helloworld"
 sbw_pkg_repo="https://github.com/sbwml/openwrt_pkgs"
 natmap_repo="https://github.com/blueberry-pie-11/luci-app-natmap"
-v2ray_geodata_repo="https://github.com/sbwml/v2ray-geodata"
-mihomo_repo="https://github.com/morytyann/OpenWrt-mihomo"
-kucat_repo="https://github.com/CodeIntegrity/luci-theme-kucat"
-advancedplus_repo="https://github.com/CodeIntegrity/luci-app-advancedplus"
 xwrt_repo="https://github.com/QiuSimons/openwrt-natflow"
+mihomo_repo="https://github.com/morytyann/OpenWrt-mihomo"
+mosdns_repo="https://github.com/sbwml/luci-app-mosdns.git"
 
 # 开始克隆仓库，并行执行
 clone_repo $openwrt_repo $latest_release openwrt &
@@ -60,11 +59,8 @@ clone_repo $openwrt_pkg_repo master openwrt_pkg_ma &
 clone_repo $openwrt_add_repo master OpenWrt-Add &
 clone_repo $dockerman_repo master dockerman &
 clone_repo $docker_lib_repo master docker_lib &
-clone_repo $linkease_repo main linkease &
-clone_repo $sirpdboy_repo main sirpdboy &
 clone_repo $mihomo_repo main OpenWrt-mihomo &
 clone_repo $mosdns_repo v5 luci-app-mosdns &
-
 # 等待所有后台任务完成
 wait
 

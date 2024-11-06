@@ -132,7 +132,7 @@ sed -i 's,@CMDLINE@ noinitrd,noinitrd mitigations=off,g' target/linux/x86/image/
 
 ### ADD PKG 部分 ###
 cp -rf ../OpenWrt-Add ./package/new
-rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,frp,microsocks,shadowsocks-libev,zerotier}
+rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,frp,microsocks,shadowsocks-libev,zerotier,daed}
 rm -rf feeds/luci/applications/{luci-app-frps,luci-app-frpc,luci-app-zerotier}
 rm -rf feeds/packages/utils/coremark
 
@@ -215,30 +215,6 @@ cp -rf ../OpenWrt-Add/fuck ./package/base-files/files/usr/bin/fuck
 rm -rf .config
 sed -i 's,CONFIG_WERROR=y,# CONFIG_WERROR is not set,g' target/linux/generic/config-5.15
 
-# Mosdns
-git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/new/luci-app-mosdns
-rm -rf ./feeds/packages/net/v2ray-geodata
-cp -rf ../mosdns/v2ray-geodata ./package/new/v2ray-geodata
-# Lucky
-cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./package/new/luci-app-lucky
-cp -rf ../sirpdboy/luci-app-lucky/lucky ./package/new/lucky
-# homeproxy
-git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git package/new/homeproxy
-rm -rf ./feeds/packages/net/sing-box
-cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
-# Mihomo
-git clone -b main --depth 1 https://github.com/morytyann/OpenWrt-mihomo package/new/OpenWrt-mihomo
-# 广告过滤 AdGuard
-cp -rf ../sirpdboy/luci-app-adguardhome ./package/new/luci-app-adguardhome
-cp -rf ../sirpdboy/adguardhome ./package/new/adguardhome
-rm -rf ./feeds/packages/net/adguardhome
-# Patch LuCI 以增添 NAT6 开关
-pushd feeds/luci
-patch -p1 <../../../PATCH/firewall/03-luci-app-firewall_add_ipv6-nat.patch
-# Patch LuCI 以支持自定义 nft 规则
-patch -p1 <../../../PATCH/firewall/04-luci-add-firewall4-nft-rules-file.patch
-popd
-
 #LTO/GC
 # Grub 2
 sed -i 's,no-lto,no-lto no-gc-sections,g' package/boot/grub2/Makefile
@@ -249,3 +225,17 @@ sed -i 's,gc-sections,gc-sections no-lto,g' feeds/packages/net/nginx/Makefile
 # libsodium
 sed -i 's,no-mips16,no-mips16 no-lto,g' feeds/packages/libs/libsodium/Makefile
 #exit 0
+
+# Mosdns
+git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns ./feeds/luci/applications/luci-app-mosdns
+rm -rf ./feeds/packages/net/v2ray-geodata
+cp -rf ../mosdns/v2ray-geodata ./feeds/luci/applications/v2ray-geodata
+# Lucky
+cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./feeds/luci/applications/luci-app-lucky
+cp -rf ../sirpdboy/luci-app-lucky/lucky ./feeds/luci/applications/lucky
+# homeproxy
+git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git ./feeds/luci/applications/homeproxy
+rm -rf ./feeds/packages/net/sing-box
+cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
+# Mihomo
+git clone -b main --depth 1 https://github.com/morytyann/OpenWrt-mihomo ./feeds/luci/applications/OpenWrt-mihomo
