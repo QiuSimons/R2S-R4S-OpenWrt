@@ -226,16 +226,6 @@ sed -i 's,gc-sections,gc-sections no-lto,g' feeds/packages/net/nginx/Makefile
 sed -i 's,no-mips16,no-mips16 no-lto,g' feeds/packages/libs/libsodium/Makefile
 #exit 0
 
-# Mosdns
-git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns ./feeds/luci/applications/luci-app-mosdns
-rm -rf ./feeds/packages/net/v2ray-geodata
-cp -rf ../mosdns/v2ray-geodata ./feeds/luci/applications/v2ray-geodata
 # Lucky
 cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./feeds/luci/applications/luci-app-lucky
 cp -rf ../sirpdboy/luci-app-lucky/lucky ./feeds/luci/applications/lucky
-# homeproxy
-git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git ./feeds/luci/applications/homeproxy
-rm -rf ./feeds/packages/net/sing-box
-cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
-# Mihomo
-git clone -b main --depth 1 https://github.com/morytyann/OpenWrt-mihomo ./feeds/luci/applications/OpenWrt-mihomo

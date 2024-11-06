@@ -46,8 +46,6 @@ sbwfw876_repo="https://github.com/sbwml/openwrt_helloworld"
 sbw_pkg_repo="https://github.com/sbwml/openwrt_pkgs"
 natmap_repo="https://github.com/blueberry-pie-11/luci-app-natmap"
 xwrt_repo="https://github.com/QiuSimons/openwrt-natflow"
-mihomo_repo="https://github.com/morytyann/OpenWrt-mihomo"
-mosdns_repo="https://github.com/sbwml/luci-app-mosdns.git"
 
 # 开始克隆仓库，并行执行
 clone_repo $openwrt_repo $latest_release openwrt &
@@ -59,8 +57,7 @@ clone_repo $openwrt_pkg_repo master openwrt_pkg_ma &
 clone_repo $openwrt_add_repo master OpenWrt-Add &
 clone_repo $dockerman_repo master dockerman &
 clone_repo $docker_lib_repo master docker_lib &
-clone_repo $mihomo_repo main OpenWrt-mihomo &
-clone_repo $mosdns_repo v5 luci-app-mosdns &
+clone_repo $sirpdboy_repo main sirpdboy &
 # 等待所有后台任务完成
 wait
 
