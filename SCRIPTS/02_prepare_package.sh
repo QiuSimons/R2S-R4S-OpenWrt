@@ -227,12 +227,5 @@ sed -i 's,no-mips16,no-mips16 no-lto,g' feeds/packages/libs/libsodium/Makefile
 #exit 0
 
 # Lucky
-cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./package/new/luci-app-lucky
-cp -rf ../sirpdboy/luci-app-lucky/lucky ./package/new/lucky
-# homeproxy
-git clone --single-branch --depth 1 -b dev https://github.com/immortalwrt/homeproxy.git package/new/homeproxy
-rm -rf ./feeds/packages/net/sing-box
-cp -rf ../immortalwrt_pkg/net/sing-box ./feeds/packages/net/sing-box
-# Mihomo
-cp -rf ../OpenWrt-mihomo/luci-app-mihomo ./package/new/luci-app-mihomo
-cp -rf ../OpenWrt-mihomo/mihomo ./package/new/mihomo
+cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./feeds/luci/applications/luci-app-lucky
+cp -rf ../sirpdboy/luci-app-lucky/lucky ./feeds/luci/applications/lucky
