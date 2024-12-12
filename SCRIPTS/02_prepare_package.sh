@@ -48,10 +48,13 @@ cp -rf ../PATCH/LRNG/* ./target/linux/generic/hack-5.15/
 echo '
 # CONFIG_RANDOM_DEFAULT_IMPL is not set
 CONFIG_LRNG=y
+CONFIG_LRNG_DEV_IF=y
 # CONFIG_LRNG_IRQ is not set
 CONFIG_LRNG_JENT=y
 CONFIG_LRNG_CPU=y
 # CONFIG_LRNG_SCHED is not set
+CONFIG_LRNG_SELFTEST=y
+# CONFIG_LRNG_SELFTEST_PANIC is not set
 ' >>./target/linux/generic/config-5.15
 # wg
 cp -rf ../PATCH/wg/* ./target/linux/generic/hack-5.15/

@@ -19,6 +19,8 @@ if echo "$INTERFACE" | grep -q "wan" && echo "$INTERFACE" | grep -qv "vap"; then
                 [ -f '/etc/init.d/miniupnpd' ] && "/etc/init.d/miniupnpd" stop 2>&1
                 "/sbin/ifup" lan 2>&1
                 [ -f '/etc/init.d/miniupnpd' ] && "/etc/init.d/miniupnpd" start 2>&1
+                sleep 10
+                [ -f '/etc/init.d/odhcpd' ] && "/etc/init.d/odhcpd" reload 2>&1
                 logger -t odhcpd "Reloading lan due to $ACTION of $INTERFACE ($DEVICE)"
             fi
         ) &

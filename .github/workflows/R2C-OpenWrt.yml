@@ -1,4 +1,4 @@
-name: X86-OpenWrt
+name: R2C-OpenWrt
 
 on:
 #  schedule:
@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    # if: github.event.repository.owner.id == github.event.sender.id
+    if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
     - name: Show system
@@ -47,7 +47,7 @@ jobs:
     - name: Prepare Mixedwrt
       run: |
         sudo chown -R runner:runner /home/runner/work/YAOF
-        cp -r ./SCRIPTS/X86/. ./SCRIPTS/
+        cp -r ./SCRIPTS/R2S/. ./SCRIPTS/
         cp -r ./SCRIPTS/. ./
         /bin/bash 01_get_ready.sh
     - name: Prepare Package
@@ -60,7 +60,7 @@ jobs:
     - name: QTMDFW4
       working-directory: ${{ github.workspace }}/openwrt
       run: |
-        cp -rf ../SEED/X86/config.seed .config
+        cp -rf ../SEED/R2C/config.seed .config
     - name: Convert Translation
       working-directory: ${{ github.workspace }}/openwrt
       run: |
@@ -74,17 +74,6 @@ jobs:
       run: |
         sudo -E chmod -R 755 ./08_fix_permissions.sh
         /bin/bash 08_fix_permissions.sh
-    - name: Diy Config
-      working-directory: ${{ github.workspace }}/openwrt
-      run: |
-        sudo -E chmod -R 755 ./09_diy.sh
-        /bin/bash 09_diy.sh
-    # - name: Install tree
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install -y tree
-    # - name: Output project structure
-    #   run: tree
     - name: Make Config
       working-directory: ${{ github.workspace }}/openwrt
       run: |
@@ -93,7 +82,7 @@ jobs:
       working-directory: ${{ github.workspace }}/openwrt
       run: |
         TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
-        echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}" >>$GITHUB_ENV
+        echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}-3328" >>$GITHUB_ENV
         latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/23/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
         echo "latest_release=${latest_release}" >>$GITHUB_ENV
     - name: Cache
@@ -125,15 +114,15 @@ jobs:
       run: |
         rm -rf ./artifact/
         mkdir -p ./artifact/
-        mv openwrt/bin/targets/x86/64/*combined-efi.img* ./artifact/
+        mv openwrt/bin/targets/rockchip/armv8/*sysupgrade.img* ./artifact/
         cd ./artifact/
         ls -Ahl
         gzip -d *.gz && exit 0
         gzip --best *.img
         ls -Ahl
-        sha256sum openwrt*x86* | tee X86-GC404-$(date +%Y-%m-%d-%H:%M)-${{ env.latest_release }}.sha256sum
-        zip X86-GC404-$(date +%Y-%m-%d-%H:%M)-${{ env.latest_release }}-ext4.zip *ext4-combined*
-        zip X86-GC404-$(date +%Y-%m-%d-%H:%M)-${{ env.latest_release }}-sfs.zip *squashfs-combined*
+        sha256sum openwrt*r2c* | tee R2C-GC404-$(date +%Y-%m-%d)-${{ env.latest_release }}.sha256sum
+        zip R2C-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-ext4.zip *r2c*ext4*
+        zip R2C-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-sfs.zip *r2c*squashfs*
         ls -Ahl
     - name: Create release
       id: create_release
@@ -145,7 +134,7 @@ jobs:
         tag: ${{ env.latest_release }}
         commit: 23.05
         replacesArtifacts: true
-        token: ${{ secrets.TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ./artifact/*.zip
     - name: Print Disk Space After
       run: df -h
