@@ -139,6 +139,9 @@ cp -rf ../OpenWrt-Add ./package/new
 rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,frp,microsocks,shadowsocks-libev,zerotier,daed}
 rm -rf feeds/luci/applications/{luci-app-frps,luci-app-frpc,luci-app-zerotier,luci-app-filemanager}
 rm -rf feeds/packages/utils/coremark
+# Lucky
+cp -rf ../sirpdboy/luci-app-lucky/luci-app-lucky ./package/new/luci-app-lucky
+cp -rf ../sirpdboy/luci-app-lucky/lucky ./package/new/lucky
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 # 更换 Nodejs 版本
@@ -182,11 +185,11 @@ pushd feeds/luci
 patch -p1 <../../../PATCH/pkgs/miniupnpd/luci-upnp-support-force_forwarding-flag.patch
 popd
 # 动态DNS
-sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
+# sed -i '/boot()/,+2d' feeds/packages/net/ddns-scripts/files/etc/init.d/ddns
 # Docker 容器
-rm -rf ./feeds/luci/applications/luci-app-dockerman
-cp -rf ../dockerman/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
-sed -i '/auto_start/d' feeds/luci/applications/luci-app-dockerman/root/etc/uci-defaults/luci-app-dockerman
+# rm -rf ./feeds/luci/applications/luci-app-dockerman
+# cp -rf ../dockerman/applications/luci-app-dockerman ./feeds/luci/applications/luci-app-dockerman
+# sed -i '/auto_start/d' feeds/luci/applications/luci-app-dockerman/root/etc/uci-defaults/luci-app-dockerman
 pushd feeds/packages
 wget -qO- https://github.com/openwrt/packages/commit/e2e5ee69.patch | patch -p1
 wget -qO- https://github.com/openwrt/packages/pull/20054.patch | patch -p1
@@ -229,3 +232,5 @@ sed -i 's,gc-sections,gc-sections no-lto,g' feeds/packages/net/nginx/Makefile
 # libsodium
 sed -i 's,no-mips16,no-mips16 no-lto,g' feeds/packages/libs/libsodium/Makefile
 #exit 0
+
+

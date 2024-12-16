@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-24.04
-    if: github.event.repository.owner.id == github.event.sender.id
+    # if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
     - name: Show system
@@ -74,6 +74,17 @@ jobs:
       run: |
         sudo -E chmod -R 755 ./08_fix_permissions.sh
         /bin/bash 08_fix_permissions.sh
+    - name: Diy Config
+      working-directory: ${{ github.workspace }}/openwrt
+      run: |
+        sudo -E chmod -R 755 ./09_diy.sh
+        /bin/bash 09_diy.sh
+    # - name: Install tree
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install -y tree
+    # - name: Output project structure
+    #   run: tree
     - name: Make Config
       working-directory: ${{ github.workspace }}/openwrt
       run: |
@@ -135,7 +146,7 @@ jobs:
         tag: ${{ env.latest_release }}
         commit: "24.10"
         replacesArtifacts: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.TOKEN }}
         artifacts: ./artifact/*.zip
     - name: Print Disk Space After
       run: df -h

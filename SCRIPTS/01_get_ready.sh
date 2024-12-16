@@ -55,11 +55,18 @@ clone_repo $immortalwrt_repo openwrt-24.10 immortalwrt_24 &
 clone_repo $immortalwrt_repo openwrt-23.05 immortalwrt_23 &
 
 clone_repo $lede_repo master lede &
+clone_repo $lede_luci_repo master lede_luci &
+clone_repo $lede_pkg_repo master lede_pkg &
 clone_repo $openwrt_repo main openwrt_ma &
+clone_repo $openwrt_repo openwrt-22.03 openwrt_22 &
 clone_repo $openwrt_pkg_repo master openwrt_pkg_ma &
+clone_repo $openwrt_luci_repo master openwrt_luci_ma &
+clone_repo $lienol_repo 23.05 Lienol &
+clone_repo $lienol_pkg_repo main Lienol_pkg &
 clone_repo $openwrt_add_repo master OpenWrt-Add &
 clone_repo $dockerman_repo master dockerman &
 clone_repo $docker_lib_repo master docker_lib &
+clone_repo $sirpdboy_repo main sirpdboy &
 # 等待所有后台任务完成
 wait
 
