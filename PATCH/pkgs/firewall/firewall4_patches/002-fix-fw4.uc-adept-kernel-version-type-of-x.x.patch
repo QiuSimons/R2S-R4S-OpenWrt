@@ -1,0 +1,23 @@
+From ba78896dffc386e641ac0eb9397761a24f4b5d87 Mon Sep 17 00:00:00 2001
+From: ZiMing Mo <msylgj@immortalwrt.org>
+Date: Sun, 7 Aug 2022 15:52:55 +0800
+Subject: [PATCH] fix(fw4.uc): adept kernel version type of x.x
+
+fix kernel version match if the kernel version type is x.x (not x.x.x)
+
+Signed-off-by: ZiMing Mo <msylgj@immortalwrt.org>
+---
+ root/usr/share/ucode/fw4.uc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/root/usr/share/ucode/fw4.uc
++++ b/root/usr/share/ucode/fw4.uc
+@@ -496,7 +496,7 @@ return {
+ 		    v = 0;
+ 
+ 		if (fd) {
+-		    let m = match(fd.read("line"), /^Linux version ([0-9]+)\.([0-9]+)\.([0-9]+)/);
++		    let m = match(fd.read("line"), /^Linux version ([0-9]+)\.([0-9]+)\.?([0-9]+)?/);
+ 
+ 		    v = m ? (+m[1] << 24) | (+m[2] << 16) | (+m[3] << 8) : 0;
+ 		    fd.close();

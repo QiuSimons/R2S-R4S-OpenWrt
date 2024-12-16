@@ -35,8 +35,8 @@ jobs:
       run: |
         sudo -E apt-get -qq update
         sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)"
-        sudo -E apt-fast -y -qq install asciidoc bash bcc bin86 binutils bison bzip2 clang-15 llvm-15 file flex g++ g++-multilib gawk gcc gcc-multilib gettext git gzip help2man intltool libboost-dev libelf-dev libncurses-dev libncurses5-dev libssl-dev libthread-queue-any-perl libusb-dev libxml-parser-perl make patch perl-modules python3-dev python3-pip python3-pyelftools python3-setuptools rsync sharutils swig time unzip util-linux wget xsltproc zlib1g-dev zip
-        sudo -E apt-fast -y -qq install dos2unix dwarves quilt npm
+        sudo -E apt-fast -y -qq install asciidoc bash bcc bin86 binutils bison bzip2 clang-15 llvm-15 clang llvm file flex g++ g++-multilib gawk gcc gcc-multilib gettext git gzip help2man intltool libboost-dev libelf-dev libncurses-dev libncurses5-dev libssl-dev libthread-queue-any-perl libusb-dev libxml-parser-perl make patch perl-modules python3-dev python3-pip python3-pyelftools python3-setuptools rsync sharutils swig time unzip util-linux wget xsltproc zlib1g-dev zip zstd
+        sudo -E apt-fast -y -qq install dos2unix dwarves quilt npm jq
         sudo -E npm install -g pnpm
         pip3 install --user -U pylibfdt --break-system-packages
         sudo -E apt-get -qq autoremove --purge
@@ -83,7 +83,7 @@ jobs:
       run: |
         TARGET_DEVICE_ARCH="$(grep "^CONFIG_TARGET_.*_.*=y$" ".config" | head -n 1 | sed 's/^CONFIG_TARGET_//g' | awk -F '_' '{print $1}')"
         echo "TARGET_DEVICE_ARCH=${TARGET_DEVICE_ARCH}-3328" >>$GITHUB_ENV
-        latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/23/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
+        latest_release="$(curl -s https://github.com/openwrt/openwrt/tags | grep -Eo "v[0-9\.]+\-*r*c*[0-9]*.tar.gz" | sed -n '/[2-9][4-9]/p' | sed -n 1p | sed 's/.tar.gz//g' | sed 's/v//g')"
         echo "latest_release=${latest_release}" >>$GITHUB_ENV
     - name: Cache
       uses: HiGarfield/cachewrtbuild@main
@@ -100,6 +100,7 @@ jobs:
       continue-on-error: true
       run: |
         #echo | make kernel_oldconfig -j$(($(nproc) + 1)) 
+        make -j$(($(nproc) + 1)) package/network/utils/nftables/refresh V=s
         IGNORE_ERRORS=1 make -j$(($(nproc) + 1))
         echo $?
     - name: If Error
@@ -121,8 +122,8 @@ jobs:
         gzip --best *.img
         ls -Ahl
         sha256sum openwrt*r2s* | tee R2S-GC404-$(date +%Y-%m-%d)-${{ env.latest_release }}.sha256sum
-        zip R2S-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-ext4.zip *r2s*ext4*
-        zip R2S-GC404-Docker-$(date +%Y-%m-%d)-${{ env.latest_release }}-sfs.zip *r2s*squashfs*
+        zip R2S-GC404-$(date +%Y-%m-%d)-${{ env.latest_release }}-ext4.zip *r2s*ext4*
+        zip R2S-GC404-$(date +%Y-%m-%d)-${{ env.latest_release }}-sfs.zip *r2s*squashfs*
         ls -Ahl
     - name: Create release
       id: create_release
@@ -132,7 +133,7 @@ jobs:
         allowUpdates: true
         prerelease: false
         tag: ${{ env.latest_release }}
-        commit: 23.05
+        commit: "24.10"
         replacesArtifacts: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ./artifact/*.zip
